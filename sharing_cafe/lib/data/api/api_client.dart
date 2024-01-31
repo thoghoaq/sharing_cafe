@@ -18,7 +18,7 @@ import 'package:sharing_cafe/util/app_constants.dart';
 class ApiClient extends GetxService {
   final String appBaseUrl;
   final SharedPreferences sharedPreferences;
-  static final String noInternetMessage = 'connection_to_api_server_failed'.tr;
+  static const String noInternetMessage = 'connection_to_api_server_failed';
   final int timeoutInSeconds = 40;
 
   String? token;
@@ -52,26 +52,17 @@ class ApiClient extends GetxService {
     // );
   }
 
-  // Map<String, String> updateHeader(String? token, List<int>? zoneIDs, List<int>? operationIds, String? languageCode, int? moduleID, String? latitude, String? longitude, {bool setHeader = true}) {
-  //   Map<String, String> header = {};
-  //   if(moduleID != null) {
-  //     header.addAll({AppConstants.moduleId: moduleID.toString()});
-  //   }
-  //   header.addAll({
-  //     'Content-Type': 'application/json; charset=UTF-8',
-  //     AppConstants.zoneId: zoneIDs != null ? jsonEncode(zoneIDs) : '',
-  //     ///this will add in ride module
-  //     // AppConstants.operationAreaId: operationIds != null ? jsonEncode(operationIds) : '',
-  //     AppConstants.localizationKey: languageCode ?? AppConstants.languages[0].languageCode!,
-  //     AppConstants.latitude: latitude != null ? jsonEncode(latitude) : '',
-  //     AppConstants.longitude: longitude != null ? jsonEncode(longitude) : '',
-  //     'Authorization': 'Bearer $token'
-  //   });
-  //   if(setHeader) {
-  //     _mainHeaders = header;
-  //   }
-  //   return header;
-  // }
+  Map<String, String> updateHeader(String? token, {bool setHeader = true}) {
+    Map<String, String> header = {};
+    header.addAll({
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    });
+    if(setHeader) {
+      _mainHeaders = header;
+    }
+    return header;
+  }
 
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
     try {
@@ -87,7 +78,7 @@ class ApiClient extends GetxService {
       if (kDebugMode) {
         print('------------${e.toString()}');
       }
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -104,7 +95,7 @@ class ApiClient extends GetxService {
       ).timeout(Duration(seconds: timeout ?? timeoutInSeconds));
       return handleResponse(response, uri);
     } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -129,7 +120,7 @@ class ApiClient extends GetxService {
       http.Response response = await http.Response.fromStream(await request.send());
       return handleResponse(response, uri);
     } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -146,7 +137,7 @@ class ApiClient extends GetxService {
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, uri);
     } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -161,7 +152,7 @@ class ApiClient extends GetxService {
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, uri);
     } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
@@ -183,7 +174,7 @@ class ApiClient extends GetxService {
         response0 = Response(statusCode: response0.statusCode, body: response0.body, statusText: response0.body['message']);
       }
     }else if(response0.statusCode != 200 && response0.body == null) {
-      response0 = Response(statusCode: 0, statusText: noInternetMessage);
+      response0 = const Response(statusCode: 0, statusText: noInternetMessage);
     }
     if(kDebugMode) {
       print('====> API Response: [${response0.statusCode}] $uri');

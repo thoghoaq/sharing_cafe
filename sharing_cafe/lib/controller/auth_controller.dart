@@ -1,25 +1,10 @@
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:image_picker/image_picker.dart';
-// import 'package:sixam_mart/controller/location_controller.dart';
-// import 'package:sixam_mart/controller/splash_controller.dart';
-// import 'package:sixam_mart/controller/user_controller.dart';
-// import 'package:sixam_mart/data/api/api_checker.dart';
-// import 'package:sixam_mart/data/api/api_client.dart';
-// import 'package:sixam_mart/data/model/body/delivery_man_body.dart';
-// import 'package:sixam_mart/data/model/body/store_body.dart';
-// import 'package:sixam_mart/data/model/body/signup_body.dart';
-// import 'package:sixam_mart/data/model/body/social_log_in_body.dart';
-// import 'package:sixam_mart/data/model/response/delivery_man_vehicles.dart';
-// import 'package:sixam_mart/data/model/response/module_model.dart';
-// import 'package:sixam_mart/data/model/response/response_model.dart';
-// import 'package:sixam_mart/data/model/response/zone_model.dart';
-// import 'package:sixam_mart/data/model/response/zone_response_model.dart';
-// import 'package:sixam_mart/data/repository/auth_repo.dart';
-// import 'package:sixam_mart/helper/responsive_helper.dart';
-// import 'package:sixam_mart/helper/route_helper.dart';
-// import 'package:sixam_mart/view/base/custom_snackbar.dart';
+
 import 'package:get/get.dart';
+import 'package:sharing_cafe/data/model/body/signup_body.dart';
+import 'package:sharing_cafe/data/model/response/response_model.dart';
 import 'package:sharing_cafe/data/repository/auth_repo.dart';
 
 class AuthController extends GetxController implements GetxService {
@@ -200,49 +185,52 @@ class AuthController extends GetxController implements GetxService {
   //   }
   // }
 
-  // Future<ResponseModel> registration(SignUpBody signUpBody) async {
-  //   _isLoading = true;
-  //   update();
-  //   Response response = await authRepo.registration(signUpBody);
-  //   ResponseModel responseModel;
-  //   if (response.statusCode == 200) {
-  //     if(!Get.find<SplashController>().configModel!.customerVerification!) {
-  //       authRepo.saveUserToken(response.body["token"]);
-  //       await authRepo.updateToken();
-  //       authRepo.clearGuestId();
-  //       Get.find<UserController>().getUserInfo();
-  //     }
-  //     responseModel = ResponseModel(true, response.body["token"]);
-  //   } else {
-  //     responseModel = ResponseModel(false, response.statusText);
-  //   }
-  //   _isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
+  Future<ResponseModel> registration(SignUpBody signUpBody) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.registration(signUpBody);
+    ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      //TODO
+      // if(!Get.find<SplashController>().configModel!.customerVerification!) {
+      //   authRepo.saveUserToken(response.body["token"]);
+      //   await authRepo.updateToken();
+      //   authRepo.clearGuestId();
+      //   Get.find<UserController>().getUserInfo();
+      // }
+      responseModel = ResponseModel(true, response.body["token"]);
+    } else {
+      responseModel = ResponseModel(false, response.statusText);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 
-  // Future<ResponseModel> login(String? phone, String password) async {
-  //   _isLoading = true;
-  //   update();
-  //   Response response = await authRepo.login(phone: phone, password: password);
-  //   ResponseModel responseModel;
-  //   if (response.statusCode == 200) {
-  //     if(Get.find<SplashController>().configModel!.customerVerification! && response.body['is_phone_verified'] == 0) {
-
-  //     }else {
-  //       authRepo.saveUserToken(response.body['token']);
-  //       await authRepo.updateToken();
-  //       authRepo.clearGuestId();
-  //       Get.find<UserController>().getUserInfo();
-  //     }
-  //     responseModel = ResponseModel(true, '${response.body['is_phone_verified']}${response.body['token']}');
-  //   } else {
-  //     responseModel = ResponseModel(false, response.statusText);
-  //   }
-  //   _isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
+  Future<ResponseModel> login(String? phone, String password) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.login(phone: phone, password: password);
+    ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      if(response.body['is_phone_verified'] == 0) {
+        //TODO
+        //đăng nhập thành công khi tk chưa được verified
+      }else {
+        authRepo.saveUserToken(response.body['token']);
+        await authRepo.updateToken();
+        // Get.find<UserController>().getUserInfo();
+        //TODO
+        //đăng nhập thành công khi tk đã được verified
+      }
+      responseModel = ResponseModel(true, '${response.body['is_phone_verified']}${response.body['token']}');
+    } else {
+      responseModel = ResponseModel(false, response.statusText);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 
   // Future<void> loginWithSocialMedia(SocialLogInBody socialLogInBody) async {
   //   _isLoading = true;
@@ -292,21 +280,21 @@ class AuthController extends GetxController implements GetxService {
   //   update();
   // }
 
-  // Future<ResponseModel> forgetPassword(String? email) async {
-  //   _isLoading = true;
-  //   update();
-  //   Response response = await authRepo.forgetPassword(email);
+  Future<ResponseModel> forgetPassword(String? email) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.forgetPassword(email);
 
-  //   ResponseModel responseModel;
-  //   if (response.statusCode == 200) {
-  //     responseModel = ResponseModel(true, response.body["message"]);
-  //   } else {
-  //     responseModel = ResponseModel(false, response.statusText);
-  //   }
-  //   _isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
+    ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      responseModel = ResponseModel(true, response.body["message"]);
+    } else {
+      responseModel = ResponseModel(false, response.statusText);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 
   // Future<void> updateToken() async {
   //   await authRepo.updateToken();
@@ -376,24 +364,23 @@ class AuthController extends GetxController implements GetxService {
   //   return responseModel;
   // }
 
-  // Future<ResponseModel> verifyPhone(String? phone, String? token) async {
-  //   _isLoading = true;
-  //   update();
-  //   Response response = await authRepo.verifyPhone(phone, _verificationCode);
-  //   ResponseModel responseModel;
-  //   if (response.statusCode == 200) {
-  //     authRepo.saveUserToken(token!);
-  //     await authRepo.updateToken();
-  //     authRepo.clearGuestId();
-  //     Get.find<UserController>().getUserInfo();
-  //     responseModel = ResponseModel(true, response.body["message"]);
-  //   } else {
-  //     responseModel = ResponseModel(false, response.statusText);
-  //   }
-  //   _isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
+  Future<ResponseModel> verifyPhone(String? phone, String? token) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.verifyPhone(phone, _verificationCode);
+    ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      authRepo.saveUserToken(token!);
+      await authRepo.updateToken();
+      // Get.find<UserController>().getUserInfo();
+      responseModel = ResponseModel(true, response.body["message"]);
+    } else {
+      responseModel = ResponseModel(false, response.statusText);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 
   // Future<void> updateZone() async {
   //   Response response = await authRepo.updateZone();
@@ -404,9 +391,9 @@ class AuthController extends GetxController implements GetxService {
   //   }
   // }
 
-  // String _verificationCode = '';
+  String _verificationCode = '';
 
-  // String get verificationCode => _verificationCode;
+  String get verificationCode => _verificationCode;
 
   // void updateVerificationCode(String query) {
   //   _verificationCode = query;

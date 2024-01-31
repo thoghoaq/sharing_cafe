@@ -124,7 +124,7 @@ Widget build(BuildContext context) {
         ),
         theme: themeController.darkTheme ? dark() : light(),
         locale: Get.deviceLocale,
-        fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
+        // fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
         initialRoute: GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(widget.body),
         getPages: RouteHelper.routes,
         defaultTransition: Transition.topLevel,

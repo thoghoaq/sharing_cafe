@@ -1,5 +1,3 @@
-import 'package:sharing_cafe/data/repository/language_model.dart';
-import 'package:sharing_cafe/util/images.dart';
 // import 'package:sixam_mart/data/model/response/choose_us_model.dart';
 // import 'package:sixam_mart/data/model/response/language_model.dart';
 // import 'package:sixam_mart/util/images.dart';
@@ -26,14 +24,14 @@ class AppConstants {
   // static const String configUri = '/api/v1/config';
   // static const String trackUri = '/api/v1/customer/order/track?order_id=';
   // static const String messageUri = '/api/v1/customer/message/get';
-  // static const String forgetPasswordUri = '/api/v1/auth/forgot-password';
+  static const String forgetPasswordUri = '/api/v1/auth/forgot-password';
   // static const String verifyTokenUri = '/api/v1/auth/verify-token';
   // static const String resetPasswordUri = '/api/v1/auth/reset-password';
-  // static const String verifyPhoneUri = '/api/v1/auth/verify-phone';
+  static const String verifyPhoneUri = '/api/v1/auth/verify-phone';
   // static const String checkEmailUri = '/api/v1/auth/check-email';
   // static const String verifyEmailUri = '/api/v1/auth/verify-email';
-  // static const String registerUri = '/api/v1/auth/sign-up';
-  // static const String loginUri = '/api/v1/auth/login';
+  static const String registerUri = '/api/v1/auth/sign-up';
+  static const String loginUri = '/api/v1/auth/login';
   static const String tokenUri = '/api/v1/customer/cm-firebase-token';
   // static const String placeOrderUri = '/api/v1/customer/order/place';
   // static const String placePrescriptionOrderUri = '/api/v1/customer/order/prescription/place';
@@ -227,12 +225,12 @@ class AppConstants {
   // static const String ecommerce = 'ecommerce';
   // static const String grocery = 'grocery';
 
-  static List<LanguageModel> languages = [
-    LanguageModel(imageUrl: Images.english, languageName: 'English', countryCode: 'US', languageCode: 'en'),
-    // LanguageModel(imageUrl: Images.tiengViet, languageName: 'Tiếng Việt', countryCode: 'VN', languageCode: 'vi'),
-    // LanguageModel(imageUrl: Images.arabic, languageName: 'Spanish', countryCode: 'ES', languageCode: 'es'),
-    // LanguageModel(imageUrl: Images.bengali, languageName: 'Bengali', countryCode: 'BN', languageCode: 'bn'),
-  ];
+  // static List<LanguageModel> languages = [
+  //   LanguageModel(imageUrl: Images.english, languageName: 'English', countryCode: 'US', languageCode: 'en'),
+  //   LanguageModel(imageUrl: Images.tiengViet, languageName: 'Tiếng Việt', countryCode: 'VN', languageCode: 'vi'),
+  //   LanguageModel(imageUrl: Images.arabic, languageName: 'Spanish', countryCode: 'ES', languageCode: 'es'),
+  //   LanguageModel(imageUrl: Images.bengali, languageName: 'Bengali', countryCode: 'BN', languageCode: 'bn'),
+  // ];
 
   // static List<String> joinDropdown = [
   //   'join_us',

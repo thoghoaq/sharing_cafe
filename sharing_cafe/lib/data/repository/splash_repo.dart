@@ -75,9 +75,14 @@ class SplashRepo {
     sharedPreferences.setBool(AppConstants.intro, false);
   }
 
-  // bool? showIntro() {
-  //   return sharedPreferences.getBool(AppConstants.intro);
-  // }
+  bool? showIntro() {
+    if(sharedPreferences.getBool(AppConstants.intro) == null)
+    {
+      return true;
+    }else{
+    return sharedPreferences.getBool(AppConstants.intro);
+    }
+  }
 
   // Future<void> setStoreCategory(int storeCategoryID) async {
   //   AddressModel? addressModel;

@@ -5,11 +5,11 @@ class Images {
   static const String tiengViet = 'assets/image/tiengViet.png';
   // static const String bengali = 'assets/image/bangla.png';
   // static const String call = 'assets/image/call.png';
-  // static const String checked = 'assets/image/checked.png';
+  static const String checked = 'assets/image/checked.png';
   static const String english = 'assets/image/english.png';
   // static const String locationMarker = 'assets/image/location_marker.png';
   // static const String lock = 'assets/image/lock.png';
-  // static const String mail = 'assets/image/mail.png';
+  static const String mail = 'assets/image/mail.png';
   // static const String map = 'assets/image/map.png';
   static const String onboard_1 = 'assets/image/onboard_1.png';
   static const String onboard_2 = 'assets/image/onboard_2.png';
@@ -77,7 +77,7 @@ class Images {
   // static const String wallet = 'assets/image/wallet.png';
   // static const String loyal = 'assets/image/loyal.png';
   // static const String referImage = 'assets/image/refer_earn.png';
-  // static const String referCode = 'assets/image/refer_code.png';
+  static const String referCode = 'assets/image/refer_code.png';
   // static const String giftBox1 = 'assets/image/gift_box1.gif';
   // static const String giftBox = 'assets/image/giftbox.gif';
   // static const String chat = 'assets/image/chat.png';

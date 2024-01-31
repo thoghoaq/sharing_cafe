@@ -29,6 +29,7 @@ import 'package:sharing_cafe/util/dimensions.dart';
 import 'package:sharing_cafe/util/images.dart';
 import 'package:sharing_cafe/util/styles.dart';
 import 'package:sharing_cafe/view/base/custom_button.dart';
+import 'package:sharing_cafe/view/base/custom_snackbar.dart';
 import 'package:sharing_cafe/view/base/custom_text_field.dart';
 // import 'package:sixam_mart/view/screens/auth/widget/social_login_widget.dart';
 
@@ -46,7 +47,6 @@ class SignInScreenState extends State<SignInScreen> {
   final FocusNode _passwordFocus = FocusNode();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String? _countryDialCode;
   bool _canExit = GetPlatform.isWeb ? true : false;
 
   @override
@@ -77,11 +77,11 @@ class SignInScreenState extends State<SignInScreen> {
             }
             return Future.value(false);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('back_press_again_to_exit'.tr, style: const TextStyle(color: Colors.white)),
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('ấn lần nữa để thoát', style: TextStyle(color: Colors.white)),
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.green,
-              duration: const Duration(seconds: 2),
+              duration: Duration(seconds: 2),
               // margin: const EdgeInsets.all(Dimensions.paddingSizeSmall),
             ));
             _canExit = true;
@@ -106,12 +106,9 @@ class SignInScreenState extends State<SignInScreen> {
         body: SafeArea(child: Scrollbar(
           child: Center(
             child: Container(
-
-              // child: Text('Login Pgae'),
               height: ResponsiveHelper.isDesktop(context) ? 690 : null,
               width: context.width > 700 ? 500 : context.width,
               padding: context.width > 700 ? const EdgeInsets.symmetric(horizontal: 0) : const EdgeInsets.all(Dimensions.paddingSizeExtremeLarge),
-              //margin: context.width > 700 ? const EdgeInsets.all(Dimensions.paddingSizeDefault) : EdgeInsets.zero,
               decoration: context.width > 700 ? BoxDecoration(
                 color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                 boxShadow: ResponsiveHelper.isDesktop(context) ? null : [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 5, spreadRadius: 1)],
@@ -136,143 +133,124 @@ class SignInScreenState extends State<SignInScreen> {
 
                           Padding(
                             padding: ResponsiveHelper.isDesktop(context) ? const EdgeInsets.all(40) : EdgeInsets.zero,
-                            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              Image.asset(Images.logo, width: 125),
-                              // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                              // Center(child: Text(AppConstants.APP_NAME, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge))),
-                              const SizedBox(height: Dimensions.paddingSizeExtraLarge),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(children: [
+                                      Image.asset(Images.logo, width: 50),
+                                      Text('Sharing Cafe', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),)
+                                    ],),
+                                    const SizedBox(height: Dimensions.paddingSizeExtremeLarge),
+                                    Text('Xin Chào', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeOverLarge),),
+                                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  Text('Vui lòng nhập số điện thoại và mật khẩu của bạn để đăng nhập.', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),),
 
-                              // Align(
-                              //   alignment: Get.find<LocalizationController>().isLtr ? Alignment.topLeft : Alignment.topRight,
-                              //   child: Text('sign_in'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
-                              // ),
-                              // const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                              // CustomTextField(
-                              //   titleText: ResponsiveHelper.isDesktop(context) ? 'phone'.tr : 'enter_phone_number'.tr,
-                              //   hintText: '',
-                              //   controller: _phoneController,
-                              //   focusNode: _phoneFocus,
-                              //   nextFocus: _passwordFocus,
-                              //   inputType: TextInputType.phone,
-                              //   isPhone: true,
-                              //   showTitle: ResponsiveHelper.isDesktop(context),
-                              //   onCountryChanged: (CountryCode countryCode) {
-                              //     _countryDialCode = countryCode.dialCode;
-                              //   },
-                              //   countryDialCode: _countryDialCode ?? Get.find<LocalizationController>().locale.countryCode,
-                              // ),
-                              const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-
-                              CustomTextField(
-                                titleText: ResponsiveHelper.isDesktop(context) ? 'password'.tr : 'enter_your_password'.tr,
-                                hintText: 'enter_your_password'.tr,
-                                controller: _passwordController,
-                                focusNode: _passwordFocus,
-                                inputAction: TextInputAction.done,
-                                inputType: TextInputType.visiblePassword,
-                                prefixIcon: Icons.lock,
-                                isPassword: true,
-                                showTitle: ResponsiveHelper.isDesktop(context),
-                                // onSubmit: (text) => (GetPlatform.isWeb) ? _login(authController, _countryDialCode!) : null,
-                                //TODO
-                                onSubmit: (text) => (GetPlatform.isWeb) ? (){} : null,
-
-                                onChanged: (value){
-                                  if(value != null && value.isNotEmpty){
-                                    if(!authController.showPassView){
-                                      authController.showHidePass();
-                                    }
-                                    authController.validPassCheck(value);
-                                  }else{
-                                    if(authController.showPassView){
-                                      authController.showHidePass();
-                                    }
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeSmall),
+                                  ],
+                                ),
+                                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  
+                                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                                  const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
 
-                              Row(children: [
-                                Expanded(
-                                  child: ListTile(
-                                    // onTap: () => authController.toggleRememberMe(),
-                                    //TODO
-                                    leading: Checkbox(
-                                      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                                      activeColor: Theme.of(context).primaryColor,
-                                      value: authController.isActiveRememberMe,
-                                      onChanged: (bool? isChecked) => authController.toggleRememberMe(),
+                                  CustomTextField(
+                                    titleText: 'Số điện thoại',
+                                    hintText: 'Số điện thoại',
+                                    controller: _phoneController,
+                                    focusNode: _phoneFocus,
+                                    nextFocus: _passwordFocus,
+                                    inputType: TextInputType.phone,
+                                    showTitle: true,
+                                  ),
+                                  const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  CustomTextField(
+                                    titleText: 'Mật khẩu',
+                                    hintText: 'Mật khẩu',
+                                    controller: _passwordController,
+                                    focusNode: _passwordFocus,
+                                    inputAction: TextInputAction.done,
+                                    inputType: TextInputType.visiblePassword,
+                                    isPassword: true,
+                                    showTitle: true,
+                                    onSubmit: (text) => _login(authController),
+                                
+                                    onChanged: (value){
+                                      if(value != null && value.isNotEmpty){
+                                        if(!authController.showPassView){
+                                          authController.showHidePass();
+                                        }
+                                        authController.validPassCheck(value);
+                                      }else{
+                                        if(authController.showPassView){
+                                          authController.showHidePass();
+                                        }
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(height: Dimensions.paddingSizeSmall),
+
+
+                                  Row(children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        onTap: () => authController.toggleRememberMe(),
+                                        leading: Checkbox(
+                                          visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                                          activeColor: Theme.of(context).primaryColor,
+                                          value: authController.isActiveRememberMe,
+                                          onChanged: (bool? isChecked) => authController.toggleRememberMe(),
+                                        ),
+                                        title: const Text('Ghi nhớ đăng nhập'),
+                                        contentPadding: EdgeInsets.zero,
+                                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                        dense: true,
+                                        horizontalTitleGap: 0,
+                                      ),
                                     ),
-                                    title: Text('remember_me'.tr),
-                                    contentPadding: EdgeInsets.zero,
-                                    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                                    dense: true,
-                                    horizontalTitleGap: 0,
+                                    TextButton(
+                                      onPressed: () => Get.toNamed(RouteHelper.getForgotPassRoute()),
+                                      child: Text('Quên mật khẩu?', style: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
+                                    ),
+                                  ]),
+                                  const SizedBox(height: Dimensions.paddingSizeLarge),
+
+
+                                  const SizedBox(height: Dimensions.paddingSizeDefault),
+
+                                  CustomButton(
+                                    height: ResponsiveHelper.isDesktop(context) ? 45 : null,
+                                    width:  ResponsiveHelper.isDesktop(context) ? 180 : null,
+                                    buttonText: 'Đăng nhập',
+                                    onPressed: () => _login(authController),
+
+                                    isLoading: authController.isLoading,
+                                    radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
+                                    isBold: !ResponsiveHelper.isDesktop(context),
+                                    fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeExtraSmall : null,
                                   ),
-                                ),
-                                TextButton(
-                                  onPressed: () => Get.toNamed(RouteHelper.getForgotPassRoute()),
-                                  child: Text('${'forgot_password'.tr}?', style: robotoRegular.copyWith(color: Theme.of(context).primaryColor)),
-                                ),
-                              ]),
-                              const SizedBox(height: Dimensions.paddingSizeLarge),
+                                  const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
+                                  ResponsiveHelper.isDesktop(context) ? const SizedBox() : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                    Text('Không có tài khoản?', style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
 
-                              const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                              CustomButton(
-                                height: ResponsiveHelper.isDesktop(context) ? 45 : null,
-                                width:  ResponsiveHelper.isDesktop(context) ? 180 : null,
-                                buttonText: ResponsiveHelper.isDesktop(context) ? 'login' : 'sign_in'.tr,
-                                // onPressed: () => _login(authController, _countryDialCode!),
-                                // TODO
-                                onPressed: () => (){},
-
-                                isLoading: authController.isLoading,
-                                radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
-                                isBold: !ResponsiveHelper.isDesktop(context),
-                                fontSize: ResponsiveHelper.isDesktop(context) ? Dimensions.fontSizeExtraSmall : null,
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeExtraLarge),
-
-                              ResponsiveHelper.isDesktop(context) ? const SizedBox() : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text('do_not_have_account'.tr, style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
-
-                                InkWell(
-                                  onTap: () {
-                                    
-                                      // Get.toNamed(RouteHelper.getSignUpRoute());
-                                      //TODO
-                                    
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                    child: Text('sign_up'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
-                                  ),
-                                ),
-                              ]),
-                              const SizedBox(height: Dimensions.paddingSizeSmall),
-
-
-                              ResponsiveHelper.isDesktop(context) ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text('do_not_have_account'.tr, style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
-
-                                InkWell(
-                                  onTap: () {
-
-                                      // Get.toNamed(RouteHelper.getSignUpRoute());
-                                    //TODO
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                    child: Text('sign_up'.tr, style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
-                                  ),
-                                ),
-                              ]) :  const SizedBox(),
-
-                            ]),
+                                    InkWell(
+                                      onTap: () {
+                                          Get.toNamed(RouteHelper.getSignUpRoute());
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                                        child: Text('Đăng ký ngay', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor)),
+                                      ),
+                                    ),
+                                  ]),
+                                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                                ]),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -286,51 +264,50 @@ class SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  // void _login(AuthController authController, String countryDialCode) async {
-  //   String phone = _phoneController.text.trim();
-  //   String password = _passwordController.text.trim();
-  //   String numberWithCountryCode = countryDialCode+phone;
-  //   PhoneValid phoneValid = await CustomValidator.isPhoneValid(numberWithCountryCode);
-  //   numberWithCountryCode = phoneValid.phone;
+  void _login(AuthController authController) async {
+    String phone = _phoneController.text.trim();
+    String password = _passwordController.text.trim();
+    // ignore: unrelated_type_equality_checks
+    bool phoneValid = phone == 10 ? true : false;
 
-  //   if (phone.isEmpty) {
-  //     showCustomSnackBar('enter_phone_number'.tr);
-  //   }else if (!phoneValid.isValid) {
-  //     showCustomSnackBar('invalid_phone_number'.tr);
-  //   }else if (password.isEmpty) {
-  //     showCustomSnackBar('enter_password'.tr);
-  //   }else if (password.length < 6) {
-  //     showCustomSnackBar('password_should_be'.tr);
-  //   }else {
-  //     authController.login(numberWithCountryCode, password).then((status) async {
-  //       if (status.isSuccess) {
-  //         Get.find<CartController>().getCartDataOnline();
-  //         if (authController.isActiveRememberMe) {
-  //           authController.saveUserNumberAndPassword(phone, password, countryDialCode);
-  //         } else {
-  //           authController.clearUserNumberAndPassword();
-  //         }
-  //         String token = status.message!.substring(1, status.message!.length);
-  //         if(Get.find<SplashController>().configModel!.customerVerification! && int.parse(status.message![0]) == 0) {
-  //           List<int> encoded = utf8.encode(password);
-  //           String data = base64Encode(encoded);
-  //           Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, token, RouteHelper.signUp, data));
-  //         }else {
+    if (phone.isEmpty) {
+      showCustomSnackBar('Vui lòng nhập số điện thoại');
+    }else if (phoneValid) {
+      showCustomSnackBar('Số điện thoại không hợp lệ');
+    }else if (password.isEmpty) {
+      showCustomSnackBar('Vui lòng nhập mật khẩu');
+    }else if (password.length < 6) {
+      showCustomSnackBar('Mật khẩu không hợp lệ');
+    }else {
+      authController.login(phone, password).then((status) async {
+        if (status.isSuccess) {
+          // Get.find<CartController>().getCartDataOnline();
+          // if (authController.isActiveRememberMe) {
+          //   authController.saveUserNumberAndPassword(phone, password, countryDialCode);
+          // } else {
+          //   authController.clearUserNumberAndPassword();
+          // }
+          // String token = status.message!.substring(1, status.message!.length);
+          // if(Get.find<SplashController>().configModel!.customerVerification! && int.parse(status.message![0]) == 0) {
+          //   List<int> encoded = utf8.encode(password);
+          //   String data = base64Encode(encoded);
+          //   Get.toNamed(RouteHelper.getVerificationRoute(numberWithCountryCode, token, RouteHelper.signUp, data));
+          // }else {
 
-  //           if(widget.backFromThis) {
-  //             if(ResponsiveHelper.isDesktop(context)){
-  //               Get.offAllNamed(RouteHelper.getInitialRoute(fromSplash: false));
-  //             } else {
-  //               Get.back();
-  //             }
-  //           }else{
-  //             Get.find<LocationController>().navigateToLocationScreen('sign-in', offNamed: true);
-  //           }
-  //         }
-  //       }else {
-  //         showCustomSnackBar(status.message);
-  //       }
-  //     });
-  //   }
-  // }
+          //   if(widget.backFromThis) {
+          //     if(ResponsiveHelper.isDesktop(context)){
+          //       Get.offAllNamed(RouteHelper.getInitialRoute(fromSplash: false));
+          //     } else {
+          //       Get.back();
+          //     }
+          //   }else{
+          //     Get.find<LocationController>().navigateToLocationScreen('sign-in', offNamed: true);
+          //   }
+          // }
+        }else {
+          showCustomSnackBar(status.message);
+        }
+      });
+    }
+  }
 }

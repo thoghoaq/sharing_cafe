@@ -45,6 +45,8 @@ dependencies:
   google_sign_in: ^6.1.6
   google_maps_flutter: ^2.5.3
   connectivity: ^3.0.6
+  pin_code_fields: ^8.0.1
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:

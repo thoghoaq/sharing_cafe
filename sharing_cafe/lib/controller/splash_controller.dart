@@ -32,7 +32,7 @@ class SplashController extends GetxController implements GetxService {
   // int _moduleIndex = 0;
   // Map<String, dynamic>? _data = {};
   // String? _htmlText;
-  // bool _isLoading = false;
+  bool _isLoading = false;
   // int _selectedModuleIndex = 0;
   // LandingModel? _landingModel;
   // bool _savedCookiesData = false;
@@ -48,7 +48,7 @@ class SplashController extends GetxController implements GetxService {
   // int get moduleIndex => _moduleIndex;
   // List<ModuleModel>? get moduleList => _moduleList;
   // String? get htmlText => _htmlText;
-  // bool get isLoading => _isLoading;
+  bool get isLoading => _isLoading;
   // int get selectedModuleIndex => _selectedModuleIndex;
   // LandingModel? get landingModel => _landingModel;
   // bool get savedCookiesData => _savedCookiesData;
@@ -106,9 +106,9 @@ class SplashController extends GetxController implements GetxService {
   //   _configModel!.moduleConfig!.module = Module.fromJson(_data!['module_config'][cacheModule!.moduleType]);
   // }
 
-  // bool? showIntro() {
-  //   return splashRepo.showIntro();
-  // }
+  bool? showIntro() {
+    return splashRepo.showIntro();
+  }
 
   void disableIntro() {
     splashRepo.disableIntro();

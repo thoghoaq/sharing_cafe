@@ -74,7 +74,7 @@ class CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        widget.showTitle ? Text(widget.titleText, style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall)) : const SizedBox(),
+        widget.showTitle ? Text(widget.titleText, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)) : const SizedBox(),
         SizedBox(height: widget.showTitle ? ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeExtraSmall : 0),
 
         TextField(
@@ -89,22 +89,24 @@ class CustomTextFieldState extends State<CustomTextField> {
           textCapitalization: widget.capitalization,
           enabled: widget.isEnabled,
           autofocus: false,
+           maxLength: widget.inputType == TextInputType.phone ? 10 : null,
           obscureText: widget.isPassword ? _obscureText : false,
           inputFormatters: widget.inputType == TextInputType.phone ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9]'))]
               : widget.isAmount ? [FilteringTextInputFormatter.allow(RegExp(r'\d'))] : widget.isNumber ? [FilteringTextInputFormatter.allow(RegExp(r'\d'))] : null,
           decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-              borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 0.3, color: Theme.of(context).primaryColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-              borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 1, color: Theme.of(context).primaryColor),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-              borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 0.3, color: Theme.of(context).primaryColor),
-            ),
+            // enabledBorder: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+            //   borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 0.3, color: Theme.of(context).primaryColor),
+            // ),
+            // focusedBorder: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+            //   borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 1, color: Theme.of(context).primaryColor),
+            // ),
+            // border: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+            //   borderSide: BorderSide(style: widget.showBorder ? BorderStyle.solid : BorderStyle.none, width: 0.3, color: Theme.of(context).primaryColor),
+            // ),
+            counterText: widget.inputType == TextInputType.phone ? "" : null,
             isDense: true,
             hintText: widget.hintText.isEmpty || !ResponsiveHelper.isDesktop(context) ? widget.titleText : widget.hintText,
             fillColor: Theme.of(context).cardColor,

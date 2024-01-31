@@ -82,12 +82,13 @@ import 'dart:convert';
 // import 'package:sixam_mart/view/screens/taxi_booking/trip_completed_confermation/trip_completed_confirmation_screen.dart';
 // import 'package:sixam_mart/view/screens/taxi_booking/trip_history/trip_history_screen.dart';
 // import 'package:sixam_mart/view/screens/update/update_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:sharing_cafe/controller/splash_controller.dart';
 import 'package:sharing_cafe/data/model/body/notification_body.dart';
 // import 'package:sharing_cafe/util/app_constants.dart';
 import 'package:sharing_cafe/view/screens/auth/sign_in_screen.dart';
+import 'package:sharing_cafe/view/screens/auth/sign_up_screen.dart';
+import 'package:sharing_cafe/view/screens/forget/verification_screen.dart';
 // import 'package:sharing_cafe/view/screens/dashboard/dashboard_screen.dart';
 import 'package:sharing_cafe/view/screens/onboard/onboarding_screen.dart';
 import 'package:sharing_cafe/view/screens/splash/splash_screen.dart';
@@ -176,7 +177,7 @@ class RouteHelper {
   // static String getLanguageRoute(String page) => '$language?page=$page';
   static String getOnBoardingRoute() => onBoarding;
   static String getSignInRoute(String page) => '$signIn?page=$page';
-  // static String getSignUpRoute() => signUp;
+  static String getSignUpRoute() => signUp;
   // static String getVerificationRoute(String? number, String? token, String page, String pass) {
   //   return '$verification?page=$page&number=$number&token=$token&pass=$pass';
   // }
@@ -203,7 +204,7 @@ class RouteHelper {
   // static String getOrderDetailsRoute(int? orderID, {bool? fromNotification, bool? fromOffline, String? contactNumber}) {
   //   return '$orderDetails?id=$orderID&from=${fromNotification.toString()}&from_offline=$fromOffline&contact=$contactNumber';
   // }
-  // static String getProfileRoute() => profile;
+  static String getProfileRoute() => profile;
   // static String getUpdateProfileRoute() => updateProfile;
   // static String getCouponRoute() => coupon;
   // static String getNotificationRoute({bool? fromNotification}) => '$notification?from=${fromNotification.toString()}';
@@ -225,7 +226,7 @@ class RouteHelper {
   //   return '$basicCampaign?data=$data';
   // }
   // static String getHtmlRoute(String page) => '$html?page=$page';
-  // static String getCategoryRoute() => categories;
+  static String getCategoryRoute() => categories;
   // static String getCategoryItemRoute(int? id, String name) {
   //   List<int> encoded = utf8.encode(name);
   //   String data = base64Encode(encoded);
@@ -236,7 +237,7 @@ class RouteHelper {
   // static String getSupportRoute() => support;
   // static String getReviewRoute() => rateReview;
   // static String getUpdateRoute(bool isUpdate) => '$update?update=${isUpdate.toString()}';
-  // static String getCartRoute() => cart;
+  static String getCartRoute() => cart;
   // static String getAddAddressRoute(bool fromCheckout, bool fromRide, int? zoneId, {bool isNavbar = false}) => '$addAddress?page=${fromCheckout ? 'checkout' : 'address'}&ride=$fromRide&zone_id=$zoneId&navbar=$isNavbar';
   // static String getEditAddressRoute(AddressModel? address, {bool fromGuest = false}) {
   //   String data = 'null';
@@ -246,7 +247,7 @@ class RouteHelper {
   //   return '$editAddress?data=$data&from-guest=$fromGuest';
   // }
   // static String getStoreReviewRoute(int? storeID) => '$storeReview?id=$storeID';
-  // static String getAllStoreRoute(String page, {bool isNearbyStore = false}) => '$allStores?page=$page${isNearbyStore ? '&nearby=${isNearbyStore.toString()}' : ''}';
+  static String getAllStoreRoute(String page, {bool isNearbyStore = false}) => '$allStores?page=$page${isNearbyStore ? '&nearby=${isNearbyStore.toString()}' : ''}';
   // static String getItemImagesRoute(Item item) {
   //   String data = base64Url.encode(utf8.encode(jsonEncode(item.toJson())));
   //   return '$itemImages?item=$data';
@@ -328,7 +329,9 @@ class RouteHelper {
 
   static List<GetPage> routes = [
     // GetPage(name: initial, page: () => getRoute(DashboardScreen(pageIndex: 0, fromSplash: Get.parameters['from-splash'] == 'true'))),
-    GetPage(name: initial, page: () => const OnBoardingScreen()),
+    // GetPage(name: initial, page: () => const OnBoardingScreen()),
+    GetPage(name: initial, page: () => const VerificationScreen(number: '0123456789', password: 'dsafsfa', fromSignUp: false, token: '1234')),
+
 
     GetPage(name: splash, page: () {
       NotificationBody? data;
@@ -336,8 +339,8 @@ class RouteHelper {
         List<int> decode = base64Decode(Get.parameters['data']!.replaceAll(' ', '+'));
         data = NotificationBody.fromJson(jsonDecode(utf8.decode(decode)));
       }
-      return const SplashScreen();
-      // return SplashScreen(body: data);
+      // return const SplashScreen();
+      return SplashScreen(body: data);
     }),
     // GetPage(name: language, page: () => ChooseLanguageScreen(fromMenu: Get.parameters['page'] == 'menu')),
     GetPage(name: onBoarding, page: () => const OnBoardingScreen()),
@@ -345,15 +348,15 @@ class RouteHelper {
       exitFromApp: Get.parameters['page'] == signUp || Get.parameters['page'] == splash || Get.parameters['page'] == onBoarding,
       backFromThis: Get.parameters['page'] != splash && Get.parameters['page'] != onBoarding,
     )),
-    // GetPage(name: signUp, page: () => const SignUpScreen()),
-    // GetPage(name: verification, page: () {
-    //   List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
-    //   String data = utf8.decode(decode);
-    //   return VerificationScreen(
-    //     number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
-    //     password: data,
-    //   );
-    // }),
+    GetPage(name: signUp, page: () => const SignUpScreen()),
+    GetPage(name: verification, page: () {
+      List<int> decode = base64Decode(Get.parameters['pass']!.replaceAll(' ', '+'));
+      String data = utf8.decode(decode);
+      return VerificationScreen(
+        number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
+        password: data,
+      );
+    }),
     // GetPage(name: accessLocation, page: () => AccessLocationScreen(
     //   fromSignUp: Get.parameters['page'] == signUp, fromHome: Get.parameters['page'] == 'home', route: null,
     // )),
